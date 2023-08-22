@@ -129,7 +129,8 @@
 </head>
 <body>
 <div class="position-fixed" style="right: calc(1.5rem * .5);bottom: calc(1.5rem * .5);z-index: 99">
-    <button class="btn btn-light rounded-circle d-flex align-items-center justify-content-center d-lg-none" type="button" data-bs-toggle="offcanvas"
+    <button class="btn btn-light rounded-circle d-flex align-items-center justify-content-center d-lg-none"
+            type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive" style="width: 3rem;height: 3rem;">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list"
              viewBox="0 0 16 16">
@@ -155,15 +156,19 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-2 order-5 order-lg-2">
-                                    <template x-if="canStartGame()">
+                                    <template x-if="logs.length">
                                         <div class="text-center d-flex align-items-center justify-content-center mt-3 text-white">
-                                            <h3 style="width: 50px;" x-text="('00' + stopwatch.hours).slice(-2)">00</h3>
+                                            <h3 style="width: 50px;" x-text="('00' + stopwatch.hours).slice(-2)">
+                                                00
+                                            </h3>
                                             <h3>:</h3>
                                             <h3 style="width: 50px;" x-text="('00' + stopwatch.minutes).slice(-2)">
-                                                00</h3>
+                                                00
+                                            </h3>
                                             <h3>:</h3>
                                             <h3 style="width: 50px;" x-text="('00' + stopwatch.seconds).slice(-2)">
-                                                00</h3>
+                                                00
+                                            </h3>
                                         </div>
                                     </template>
                                 </div>
@@ -194,7 +199,7 @@
                                                     </template>
                                                     <template x-if="! gameStart">
                                                         <input type="text" class="form-control text-center w-auto"
-                                                               style="z-index: 5"
+                                                               style="z-index: 5" tabindex="1"
                                                                x-model="players.teamA[1]">
                                                     </template>
                                                 </div>
@@ -211,7 +216,7 @@
                                                     </template>
                                                     <template x-if="! gameStart">
                                                         <input type="text" class="form-control text-center w-auto"
-                                                               style="z-index: 5"
+                                                               style="z-index: 5" tabindex="2"
                                                                x-model="players.teamA[0]">
                                                     </template>
                                                 </div>
@@ -219,7 +224,7 @@
                                         </div>
                                         <template x-if="! gameStart">
                                             <div class="position-absolute top-0 left-0 w-100 h-100 d-flex align-items-center justify-content-center">
-                                                <button class="btn btn-info"
+                                                <button class="btn btn-info" tabindex="5"
                                                         @click="swapPlayers('teamA')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                          fill="currentColor" class="bi bi-arrow-down-up"
@@ -233,10 +238,19 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="court border-end-0">
-                                        <template x-if="!gameStart && server && logs.length">
-                                            <div class="position-absolute w-100 h-100 top-0 start-0 d-flex align-items-center justify-content-center">
-                                                <button class="btn btn-info"
+                                    <div class="court border-end-0 py-3 px-1">
+                                        <div class="text-center">
+                                            <template x-if="interval.slice().reverse()[0]">
+                                                <div class="mb-3">
+                                                    <h1 class="text-white">Interval</h1>
+                                                    <button class="btn btn-primary" @click="stopInterval()">
+                                                        Continue game
+                                                    </button>
+                                                </div>
+                                            </template>
+                                            <template
+                                                    x-if="(!gameStart && server && logs.length) || interval.slice().reverse()[0]">
+                                                <button class="btn btn-info" tabindex="7"
                                                         @click="swapTeam()">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                          fill="currentColor" class="bi bi-arrow-left-right"
@@ -245,8 +259,8 @@
                                                               d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
                                                     </svg>
                                                 </button>
-                                            </div>
-                                        </template>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col">
@@ -264,7 +278,7 @@
                                                     </template>
                                                     <template x-if="! gameStart">
                                                         <input type="text" class="form-control text-center w-auto"
-                                                               style="z-index: 5"
+                                                               style="z-index: 5" tabindex="3"
                                                                x-model="players.teamB[0]">
                                                     </template>
                                                 </div>
@@ -281,7 +295,7 @@
                                                     </template>
                                                     <template x-if="! gameStart">
                                                         <input type="text" class="form-control text-center w-auto"
-                                                               style="z-index: 5"
+                                                               style="z-index: 5" tabindex="4"
                                                                x-model="players.teamB[1]">
                                                     </template>
                                                 </div>
@@ -290,7 +304,7 @@
                                         <template x-if="! gameStart">
                                             <div class="position-absolute top-0 left-0 w-100 h-100 d-flex align-items-center justify-content-center"
                                                  style="z-index: 0">
-                                                <button class="btn btn-info"
+                                                <button class="btn btn-info" tabindex="6"
                                                         @click="swapPlayers('teamB')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                          fill="currentColor" class="bi bi-arrow-down-up"
@@ -317,11 +331,11 @@
                                 </div>
                             </template>
                         </div>
-                        <div class="mt-3">
+                        <div class="my-3">
                             <template x-if="gameStart && ! winner">
                                 <div class="row justify-content-center">
                                     <div class="col-12 col-sm-auto mb-2 mb-lg-0 text-center">
-                                        <button class="btn btn-info"
+                                        <button class="btn btn-light"
                                                 @click="changeShuttle()">
                                             Change shuttle
                                         </button>
@@ -332,25 +346,47 @@
                                             Pause game
                                         </button>
                                     </div>
-                                    <div class="col-auto mb-2 mb-lg-0">
+                                </div>
+                            </template>
+                            <template x-if="!gameStart && server && logs.length">
+                                <div class="row justify-content-center">
+                                    <div class="col-auto">
                                         <button class="btn btn-danger"
                                                 @click="resetGame()">
                                             Reset game
                                         </button>
                                     </div>
-                                </div>
-                            </template>
-                            <template x-if="!gameStart && server && logs.length">
-                                <div class="scoreboard justify-content-center text-center">
-                                    <button class="btn btn-secondary"
-                                            @click="resumeGame()">
-                                        Resume game
-                                    </button>
+                                    <div class="col-auto">
+                                        <button class="btn btn-secondary"
+                                                @click="resumeGame()">
+                                            Resume game
+                                        </button>
+                                    </div>
                                 </div>
                             </template>
                         </div>
                     </div>
                 </div>
+                <template x-if="staticPlayers.teamA && staticPlayers.teamB">
+                    <table class="table table-bordered w-auto">
+                        <tr class="align-middle">
+                            <th x-text="staticPlayers.teamA.join(' / ')"></th>
+                            <template x-for="set in Array(matchSettings.sets)">
+                                <td>
+                                    <h1>0</h1>
+                                </td>
+                            </template>
+                        </tr>
+                        <tr class="align-middle">
+                            <th x-text="staticPlayers.teamB.join(' / ')"></th>
+                            <template x-for="set in Array(matchSettings.sets)">
+                                <td>
+                                    <h1>0</h1>
+                                </td>
+                            </template>
+                        </tr>
+                    </table>
+                </template>
             </div>
             <div class="col-lg-3">
                 <div class="offcanvas-lg offcanvas-end" tabindex="-1" id="offcanvasResponsive" data-bs-theme="dark"
@@ -383,9 +419,9 @@
                                         <template x-for="(log, index) in gameHistory" :key="index">
                                             <tr style="font-family: var(--bs-font-monospace);"
                                                 :class="{
-                                    'table-info': log.server === 'teamA',
-                                    'table-warning': log.server === 'teamB'
-                                 }">
+                                                    'table-info': log.server === 'teamA',
+                                                    'table-warning': log.server === 'teamB'
+                                                 }">
                                                 <td>
                                                     <span x-text="actions[log.action]"></span>
                                                 </td>
@@ -397,7 +433,8 @@
                                                     <span x-text="teams[log.server]"></span>
                                                 </td>
                                                 <td>
-                                                    <template x-if="['score', 'correction'].includes(log.action) && index !== 0">
+                                                    <template
+                                                            x-if="['score', 'correction'].includes(log.action) && index !== 0 && ! winner">
                                                         <button class="btn btn-danger btn-sm py-0 px-1"
                                                                 @click="revertState(index)">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="10"
@@ -442,7 +479,7 @@
                                            x-model="matchSettings.gameInterval">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="interval" class="form-label text-white">
+                                    <label class="form-label text-white">
                                         Service
                                     </label>
                                     <div>
@@ -490,7 +527,10 @@
     'start': 'Game start',
     'score': 'Score',
     'shuttle': 'Change shuttle',
-    'correction': 'Correction'
+    'correction': 'Correction',
+    'start_interval': 'Start interval',
+    'stop_interval': 'Continue game',
+    'change_ends': 'Change ends'
   };
   document.addEventListener('alpine:init', () => {
     let stopwatchTimer;
@@ -503,23 +543,19 @@
           minutes: 0,
           seconds: 0
         }),
-        matchSettings: {
+        matchSettings: this.$persist({
           sets: 1,
           gamePoint: 21,
           gameInterval: 11
-        },
-        gamePoint: 21,
+        }),
+        interval: this.$persist([]),
+        gamePoint: this.$persist(21),
         winner: null,
         players: this.$persist({
-          teamA: [
-            '',
-            ''
-          ],
-          teamB: [
-            '',
-            ''
-          ]
+          teamA: ['', ''],
+          teamB: ['', '']
         }),
+        staticPlayers: this.$persist({}),
         scores: this.$persist({
           teamA: 0,
           teamB: 0
@@ -531,6 +567,7 @@
 
         init() {
           if (this.gameStart) {
+            this.checkForInterval();
             this.checkForWinner();
 
             if (!this.winner) {
@@ -551,7 +588,11 @@
         },
 
         startGame() {
-          this.gameStart = this.matchSettings.gamePoint;
+          this.staticPlayers = {
+            teamA: this.players.teamA.slice(),
+            teamB: this.players.teamB.slice()
+          };
+          this.gamePoint = this.matchSettings.gamePoint;
           this.shuttleCount = 1;
           this.gameStart = true;
           this.pushLog('start');
@@ -564,6 +605,15 @@
         resumeGame() {
           this.gameStart = true;
           this.startStopwatch();
+        },
+
+        startInterval() {
+          this.interval.push(true);
+          this.pushLog('start_interval');
+        },
+        stopInterval() {
+          this.interval.push(false);
+          this.pushLog('stop_interval');
         },
 
         changeShuttle() {
@@ -586,13 +636,30 @@
           this.players[team].reverse();
         },
         swapTeam() {
+          var scoreA = this.scores.teamA;
+          this.scores.teamA = this.scores.teamB;
+          this.scores.teamB = scoreA;
+
           var teamA = this.players.teamA;
           this.players.teamA = this.players.teamB;
           this.players.teamB = teamA;
+
+          var server = this.server;
+          if (server === 'teamB') {
+            this.server = 'teamA';
+          } else {
+            this.server = 'teamB';
+          }
+
+          this.pushLog('change_ends');
         },
 
         givePoint(forTeam) {
-          if (this.server == null || !this.gameStart) {
+          if (
+              this.server == null
+              || !this.gameStart
+              || (this.interval.length && this.interval.slice().reverse()[0])
+          ) {
             return;
           }
           if (forTeam === 'teamA') {
@@ -604,14 +671,29 @@
             this.swapPlayers(forTeam);
           }
           this.server = forTeam;
-
           this.pushLog();
 
-          if (this.scores.teamA >= 20 || this.scores.teamB >= 20) {
+          this.checkForInterval();
+
+          if (
+              this.scores.teamA >= this.gamePoint - 1
+              || this.scores.teamB >= this.gamePoint - 1
+          ) {
             this.checkForWinner();
           }
         },
 
+        checkForInterval() {
+          if (
+              (
+                  this.scores.teamA === parseInt(this.matchSettings.gameInterval)
+                  || this.scores.teamB === parseInt(this.matchSettings.gameInterval)
+              )
+              && !this.interval.length
+          ) {
+            this.startInterval();
+          }
+        },
         checkForWinner() {
           this.checkForDeuce();
 
@@ -679,6 +761,7 @@
           this.server = null;
           this.gameStart = false;
           this.logs = [];
+          this.interval = [];
           this.gamePoint = this.matchSettings.gamePoint;
           this.winner = null;
         }
